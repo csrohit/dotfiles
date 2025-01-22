@@ -42,9 +42,6 @@ return {
 				row = 0,
 				col = 1,
 			},
-			yadm = {
-				enable = false,
-			},
 		})
 		Map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
 		Map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>")

@@ -39,13 +39,6 @@ local on_attach = function(client, bufnr)
         vim.lsp.buf.format()
     end, { desc = "Format current buffer with LSP" })
 
-    -- typescript specific keymaps (e.g. rename file and update imports)
-    if client.name == "ts_ls" then
-        Nmap("<leader>rf", ":TypescriptRenameFile<CR>")      -- rename file and update imports
-        Nmap("<leader>oi", ":TypescriptOrganizeImports<CR>") -- organize imports (not in youtube nvim video)
-        Nmap("<leader>ru", ":TypescriptRemoveUnused<CR>")    -- remove unused variables (not in youtube nvim video)
-    end
-
     Nmap("<leader>lf", function()
         vim.lsp.buf.format()
     end, { desc = "Format file" })
@@ -58,7 +51,6 @@ return {
         "folke/neodev.nvim",
         "hrsh7th/cmp-nvim-lsp",
         "williamboman/mason-lspconfig.nvim",
-        "jose-elias-alvarez/typescript.nvim",
     },
     opts = {},
     config = function()
@@ -79,16 +71,9 @@ return {
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
         end
 
-        local typescript = require("typescript")
-
         -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
-        typescript.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-        })
 
         local servers = {
             lua_ls = {
