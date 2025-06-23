@@ -1,0 +1,4 @@
+Index:
+    Background: Skip
+CompileFlags:
+  Add: [-resource-dir=/usr/lib/clang/21]

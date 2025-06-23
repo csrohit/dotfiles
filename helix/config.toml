@@ -1,0 +1,32 @@
+
+theme = "tokyonight"
+
+[editor]
+line-number = "relative"
+mouse = false
+bufferline = "multiple"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.statusline]
+left = ["mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+
+[keys.normal]
+l.f = ":format" # Formats the current buffer
+"tab" = ":buffer-next"
+"S-tab" = ":buffer-previous"
+"space" = {"e" = "file_picker", "f" = "file_picker_in_current_directory", "F" = "file_picker_in_current_buffer_directory"}
+

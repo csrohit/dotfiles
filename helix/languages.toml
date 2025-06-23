@@ -1,0 +1,5 @@
+[[language]]
+name = "cpp"
+file-types = ["cpp", "cc", "cxx", "hpp", "h"]  # <-- Add "h" here if C++ headers
+formatter = { command = "clang-format", args = ["--style=file"] }
+
