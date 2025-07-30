@@ -75,4 +75,4 @@ Nmap("<leader>rs", ":LspRestart<CR>", { desc = "[R] Restart LSP server" }) -- ma
 --terminal
 Nmap("<C-`>", ":vsplit term://zsh<CR>", { desc = "Open terminal" })
 Map("t", "<ESC>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-Nmap("<leader>ng", "<cmd>Neogen<CR>", { desc = "Exit terminal mode" })
+Nmap("<leader>ng", "<cmd>Neogen<CR>", { desc = "Generate annotations" })

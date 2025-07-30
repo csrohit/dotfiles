@@ -1,0 +1,109 @@
+
+-- File: lua/csrohit/plugins/blink.lua
+-- blink.cmp configuration replicating the existing nvim-cmp setup with dynamic source activation and symbol formatting
+
+return {
+    "saghen/blink.cmp",
+    dependencies = {
+        "rafamadriz/friendly-snippets",         -- snippets collection
+        "folke/lazydev.nvim",                    -- optional Lua dev completions source
+        "saghen/blink.compat",                   -- compatibility layer for nvim-cmp sources (optional)
+    },
+
+    opts = {
+        -- Appearance and formatting (akin to lspkind)
+        appearance = {
+            -- Use nerd font mono variant for better icon spacing
+            nerd_font_variant = "mono",
+            -- Icons can be customized here; you can add symbol icons matching lspkind style
+            kind_icons = {
+                Text = "",
+                Method = "",
+                Function = "",
+                Constructor = "",
+                Field = "",
+                Variable = "",
+                Class = "ﴯ",
+                Interface = "",
+                Module = "",
+                Property = "ﰠ",
+                Unit = "",
+                Value = "",
+                Enum = "",
+                Keyword = "",
+                Snippet = "",
+                Color = "",
+                File = "",
+                Reference = "",
+                Folder = "",
+                EnumMember = "",
+                Constant = "",
+                Struct = "",
+                Event = "",
+                Operator = "",
+                TypeParameter = "",
+            },
+            use_nvim_cmp_as_default = false,  -- Don't fall back on nvim-cmp highlighting (optional)
+        },
+
+        -- Completion sources with default and compat groups
+        sources = {
+            -- Default sources always enabled
+            default = { "lsp", "snippets", "path", "buffer" },
+            -- Compat sources for nvim-cmp compatibility (required if using nvim-cmp sources)
+            compat = {},
+            -- Providers table for external source plugins like lazydev
+            providers = {
+                lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    score_offset = 100,  -- higher priority than LSP
+                },
+            },
+        },
+
+        -- Completion menu config: documentation auto popup, ghost text (if you want), signature help enabled
+        completion = {
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 200,
+            },
+            ghost_text = {
+                enabled = true,  -- enable inline ghost text (adjust as needed)
+            },
+            accept = {
+                auto_brackets = {
+                    enabled = true,  -- experimental auto-bracket feature similar to nvim-cmp's
+                },
+            },
+            signature = {
+                enabled = true,  -- enables experimental builtin signature help popup
+            },
+        },
+
+        -- Keymap style: "preset" options available: enter, tab, etc.
+        keymap = {
+            preset = "insert",    -- use "insert" preset mappings similar to nvim-cmp insert mode
+            ["<Tab>"] = "select_next",     -- select next completion item
+            ["<S-Tab>"] = "select_prev",   -- select previous completion item
+            ["<C-d>"] = "scroll_docs_up",
+            ["<C-f>"] = "scroll_docs_down",
+            ["<C-Space>"] = "complete",
+            ["<CR>"] = "accept",
+            -- Additional custom mappings can be added here as needed
+        },
+    },
+
+    config = function(_, opts)
+        local cmp = require("blink.cmp")
+
+        -- Dynamically add LazyDev source if plugin is available
+        local has_lazydev = pcall(require, "lazydev")
+        if has_lazydev then
+            table.insert(opts.sources.default, "lazydev")
+        end
+
+        -- Load the plugin with configured options
+        cmp.setup(opts)
+    end,
+}
