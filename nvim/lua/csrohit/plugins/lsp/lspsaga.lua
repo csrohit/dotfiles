@@ -17,42 +17,36 @@ return {
         Map({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { desc = "LspSaga Code Action" })
 
         -- Rename all occurrences of the hovered word for the entire file
-        Nmap("gr", "<cmd>Lspsaga rename<CR>", { desc = "LspSaga rename symbol" })
+        Nmap("gr", "<cmd>Lspsaga rename<CR>", { desc = "Rename symbol" })
 
         -- Rename all occurrences of the hovered word for the selected files
-        Nmap("gR", "<cmd>Lspsaga rename ++project<CR>")
+        Nmap("gR", "<cmd>Lspsaga rename ++project<CR>", { desc = "Rename symbol across project" })
 
         -- Peek definition
         -- You can edit the file containing the definition in the floating window
         -- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
         -- It also supports tagstack
         -- Use <C-t> to jump back
-        Nmap("gp", "<cmd>Lspsaga peek_definition<CR>")
-
-        -- Go to definition
-        Nmap("gd", "<cmd>Lspsaga goto_definition<CR>")
+        Nmap("gpd", "<cmd>Lspsaga peek_definition<CR>", { desc = "Peek definition" })
 
         -- Peek type definition
         -- You can edit the file containing the type definition in the floating window
         -- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
         -- It also supports tagstack
         -- Use <C-t> to jump back
-        Nmap("<leader>gt", "<cmd>Lspsaga peek_type_definition<CR>")
-
-        -- Go to type definition
-        Nmap("gt", "<cmd>Lspsaga goto_type_definition<CR>")
+        Nmap("gpt", "<cmd>Lspsaga peek_type_definition<CR>", {desc = "Peek type definition"})
 
         -- Show line diagnostics
         -- You can pass argument ++unfocus to
         -- unfocus the show_line_diagnostics floating window
-        -- Nmap("<leader>dl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+        Nmap("<leader>dl", "<cmd>Lspsaga show_line_diagnostics<CR>")
 
         -- Show cursor diagnostics
         -- Like show_line_diagnostics, it supports passing the ++unfocus argument
-        -- Nmap("<leader>dc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+        Nmap("<leader>dc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
         -- Show buffer diagnostics
-        -- Nmap("<leader>db", "<cmd>Lspsaga show_buf_diagnostics<CR>")
+        Nmap("<leader>db", "<cmd>Lspsaga show_buf_diagnostics<CR>")
 
         -- Diagnostic jump
         -- You can use <C-o> to jump back to your previous location

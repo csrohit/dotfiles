@@ -10,18 +10,24 @@ local on_attach = function(client, bufnr)
         vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
     end
 
+    -- Symbols displayed in Telescope window
+    local builtin = require("telescope.builtin")
+    nmap("<leader>ds", builtin.lsp_document_symbols, "Document Symbols")
+    nmap("<leader>ws", builtin.lsp_dynamic_workspace_symbols, "Workspace Symbols")
+
     -- Basic LSP navigation and info keymaps
-    nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-    nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-    nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-    nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+    nmap("gI", vim.lsp.buf.implementation, "Goto Implementation")
     nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
-    nmap("<leader>gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+    nmap("gd", vim.lsp.buf.definition, "Goto Definition")
+    nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
+    nmap("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
+
     nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
     nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
     nmap("<leader>wl", function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, "[W]orkspace [L]ist Folders")
+    end, "Workspace List Folders")
 
     -- Keymap for formatting (also create :Format command)
     vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
