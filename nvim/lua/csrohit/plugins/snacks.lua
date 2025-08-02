@@ -37,7 +37,7 @@ return {
         -- find
         { "<leader>fb",      function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
         { "<leader>fc",      function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
-        { "<leader>tf",      function() Snacks.picker.files() end,                                   desc = "Find Files" },
+        { "<leader>ff",      function() Snacks.picker.files() end,                                   desc = "Find Files" },
         { "<leader>fg",      function() Snacks.picker.git_files() end,                               desc = "Find Git Files" },
         { "<leader>fp",      function() Snacks.picker.projects() end,                                desc = "Projects" },
         { "<leader>fr",      function() Snacks.picker.recent() end,                                  desc = "Recent" },
@@ -96,7 +96,6 @@ return {
         { "<leader>gg",      function() Snacks.lazygit() end,                                        desc = "Lazygit" },
         { "<leader>un",      function() Snacks.notifier.hide() end,                                  desc = "Dismiss All Notifications" },
         { "<c-/>",           function() Snacks.terminal() end,                                       desc = "Toggle Terminal" },
-        { "<c-_>",           function() Snacks.terminal() end,                                       desc = "which_key_ignore" },
         { "]]",              function() Snacks.words.jump(vim.v.count1) end,                         desc = "Next Reference",           mode = { "n", "t" } },
         { "[[",              function() Snacks.words.jump(-vim.v.count1) end,                        desc = "Prev Reference",           mode = { "n", "t" } },
         {
@@ -131,6 +130,7 @@ return {
                 end
                 vim.print = _G.dd -- Override print to use snacks for `:=` command
 
+
                 -- Create some toggle mappings
                 Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
                 Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
@@ -141,7 +141,7 @@ return {
                     :map("<leader>uc")
                 Snacks.toggle.treesitter():map("<leader>uT")
                 Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map(
-                "<leader>ub")
+                    "<leader>ub")
                 Snacks.toggle.inlay_hints():map("<leader>uh")
                 Snacks.toggle.indent():map("<leader>ug")
                 Snacks.toggle.dim():map("<leader>uD")

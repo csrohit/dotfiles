@@ -23,21 +23,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --]]
 
 function Map(mode, lhs, rhs, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.keymap.set(mode, lhs, rhs, options)
+    local options = { noremap = true, silent = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.keymap.set(mode, lhs, rhs, options)
 end
 
 -- mapping for normal mode
 function Nmap(lhs, rhs, opts)
-	Map("n", lhs, rhs, opts)
+    Map("n", lhs, rhs, opts)
 end
 
 -- mapping for visual mode
 function Vmap(lhs, rhs, opts)
-	Map("v", lhs, rhs, opts)
+    Map("v", lhs, rhs, opts)
 end
 
 -- set leader key
@@ -76,3 +76,4 @@ Nmap("<leader>rs", ":LspRestart<CR>", { desc = "[R] Restart LSP server" }) -- ma
 Nmap("<C-`>", ":vsplit term://zsh<CR>", { desc = "Open terminal" })
 Map("t", "<ESC>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 Nmap("<leader>ng", "<cmd>Neogen<CR>", { desc = "Generate annotations" })
+
