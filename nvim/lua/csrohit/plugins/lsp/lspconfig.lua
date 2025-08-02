@@ -37,24 +37,34 @@ end
 
 return {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "j-hui/fidget.nvim", -- optional UI for LSP status
         "saghen/blink.cmp",
-        -- "hrsh7th/cmp-nvim-lsp",              -- Completion source for nvim-cmp
-        "williamboman/mason-lspconfig.nvim", -- External LSP installer mapping
     },
-    opts = {},
+    opts = {
+
+        signs = {
+            -- Define the text symbols for each diagnostic severity level
+            text = {
+                [vim.diagnostic.severity.ERROR] = "",
+                [vim.diagnostic.severity.WARN]  = "",
+                [vim.diagnostic.severity.INFO]  = "󰋼",
+                [vim.diagnostic.severity.HINT]  = "󰌵",
+            },
+            -- You can optionally configure number highlights here
+            numhl = {
+                [vim.diagnostic.severity.ERROR] = "",
+                [vim.diagnostic.severity.WARN]  = "",
+                [vim.diagnostic.severity.INFO]  = "",
+                [vim.diagnostic.severity.HINT]  = "",
+            },
+        },
+    },
 
     config = function()
         local lspconfig = require("lspconfig")
         local util = lspconfig.util
-
-        -- Define diagnostic signs in the sign column (gutter)
-        local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-        end
 
         -- Setup enhanced capabilities from nvim-cmp for completion
         -- local capabilities = require('blink.cmp').get_lsp_capabilities();
@@ -101,6 +111,19 @@ return {
                     }
                 },
             },
+        })
+
+        lspconfig.cmake.setup({
+            cmd = { "cmake-language-server" }, -- command to start the server; ensure it's in your PATH
+            filetypes = { "cmake" }, -- recognizes *.cmake and CMakeLists.txt files
+            root_dir = lspconfig.util.root_pattern("CMakeLists.txt", ".git", "build", "cmake"),
+            -- root_dir determines the project root by detecting any of these files/directories upward from the opened file
+
+            init_options = {
+                buildDirectory = "build", -- relative build directory for CMake's file API (adjust to your project)
+            },
+
+            single_file_support = true, -- enable for single cmake files outside a project root
         })
 
         -- cmake-language-server for CMakeLists.txt and cmake files

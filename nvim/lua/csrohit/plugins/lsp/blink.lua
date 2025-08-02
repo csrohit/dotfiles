@@ -1,17 +1,15 @@
-
 -- File: lua/csrohit/plugins/blink.lua
 -- blink.cmp configuration replicating the existing nvim-cmp setup with dynamic source activation and symbol formatting
 
 return {
     "saghen/blink.cmp",
-
+    event = { "BufReadPre", "BufNewFile" },
     -- use a release tag to download pre-built binaries
-      version = '1.*',
+    version = '1.*',
 
     dependencies = {
-        "rafamadriz/friendly-snippets",         -- snippets collection
-        "folke/lazydev.nvim",                    -- optional Lua dev completions source
-        "saghen/blink.compat",                   -- compatibility layer for nvim-cmp sources (optional)
+        "folke/lazydev.nvim",  -- optional Lua dev completions source
+        "saghen/blink.compat", -- compatibility layer for nvim-cmp sources (optional)
     },
 
     opts = {
@@ -30,23 +28,21 @@ return {
         keymap = { preset = 'enter' },
 
         appearance = {
-          -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-          -- Adjusts spacing to ensure icons are aligned
-          nerd_font_variant = 'mono'
+            -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+            -- Adjusts spacing to ensure icons are aligned
+            nerd_font_variant = 'mono'
         },
 
         -- Completion sources with default and compat groups
         sources = {
             -- Default sources always enabled
             default = { "lsp", "snippets", "path", "buffer", "lazydev" },
-            -- Compat sources for nvim-cmp compatibility (required if using nvim-cmp sources)
-            compat = {},
             -- Providers table for external source plugins like lazydev
             providers = {
                 lazydev = {
                     name = "LazyDev",
                     module = "lazydev.integrations.blink",
-                    score_offset = 100,  -- higher priority than LSP
+                    score_offset = 100, -- higher priority than LSP
                 },
             },
         },
@@ -58,16 +54,16 @@ return {
                 auto_show_delay_ms = 200,
             },
             ghost_text = {
-                enabled = true,  -- enable inline ghost text (adjust as needed)
+                enabled = true, -- enable inline ghost text (adjust as needed)
             },
             accept = {
                 auto_brackets = {
-                    enabled = true,  -- experimental auto-bracket feature similar to nvim-cmp's
+                    enabled = true, -- experimental auto-bracket feature similar to nvim-cmp's
                 },
             },
-            signature = {
-                enabled = true,  -- enables experimental builtin signature help popup
-            },
+        },
+        signature = {
+            enabled = true,     -- enables experimental builtin signature help popup
         },
 
         -- Keymap style: "preset" options available: enter, tab, etc.
@@ -89,18 +85,5 @@ return {
         fuzzy = { implementation = "prefer_rust_with_warning" },
 
     },
-      opts_extend = { "sources.default" },
-
-    config = function(_, opts)
-        local cmp = require("blink.cmp")
-
-        -- Dynamically add LazyDev source if plugin is available
-        local has_lazydev = pcall(require, "lazydev")
-        if has_lazydev then
-            table.insert(opts.sources.default, "lazydev")
-        end
-
-        -- Load the plugin with configured options
-        cmp.setup(opts)
-    end,
+    opts_extend = { "sources.default" },
 }
