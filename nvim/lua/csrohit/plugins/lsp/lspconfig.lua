@@ -23,6 +23,7 @@ local on_attach = function(client, bufnr)
     nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
     nmap("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
 
+
     nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
     nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
     nmap("<leader>wl", function()
@@ -43,8 +44,8 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
         "j-hui/fidget.nvim",                 -- optional UI for LSP status
-        "folke/lazydev.nvim",                -- Lua development plugin
-        "hrsh7th/cmp-nvim-lsp",              -- Completion source for nvim-cmp
+        "saghen/blink.cmp",
+        -- "hrsh7th/cmp-nvim-lsp",              -- Completion source for nvim-cmp
         "williamboman/mason-lspconfig.nvim", -- External LSP installer mapping
     },
     opts = {},
@@ -61,7 +62,19 @@ return {
         end
 
         -- Setup enhanced capabilities from nvim-cmp for completion
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        -- local capabilities = require('blink.cmp').get_lsp_capabilities();
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+        capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
+
+        -- capabilities = vim.tbl_deep_extend('force', capabilities, {
+        --   textDocument = {
+        --     foldingRange = {
+        --       dynamicRegistration = false,
+        --       lineFoldingOnly = true
+        --     }
+        --   }
+        -- })
 
         -- clangd: C, C++ and Objective-C language server configuration
         lspconfig.clangd.setup({

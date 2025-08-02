@@ -1,91 +1,91 @@
--- File: lua/csrohit/plugins/cmp.lua
--- nvim-cmp config with conditional source activation
-
+-- -- File: lua/csrohit/plugins/cmp.lua
+-- -- nvim-cmp config with conditional source activation
+--
 return {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "rafamadriz/friendly-snippets",
-        "onsails/lspkind.nvim",
-        "hrsh7th/cmp-nvim-lsp-signature-help",
-        -- Add optional external sources here as dependencies to ensure installation:
-        "folke/lazydev.nvim",         -- lazydev source plugin
-        -- e.g., "saghen/blink.cmp"   -- if you use blink completion source
-    },
-
-    opts = {
-        -- Base sources always present
-        sources = {
-            { name = "nvim_lsp" },
-            { name = "nvim_lsp_signature_help" },
-            { name = "path" },
-            { name = "buffer" },
-        },
-        formatting = {
-            format = function(entry, vim_item)
-                -- Placeholder, overridden by lspkind in config()
-                return vim_item
-            end,
-        },
-        mapping = {},  -- placeholder for mappings set in config()
-    },
-
-    config = function(_, opts)
-        local cmp = require("cmp")
-        local lspkind = require("lspkind")
-        local has_neogen, neogen = pcall(require, "neogen")
-
-        -- Conditionally add lazydev source if plugin is available
-        local has_lazydev = pcall(require, "lazydev")
-        if has_lazydev then
-            table.insert(opts.sources, {
-                name = "lazydev",
-                group_index = 0,  -- optional config for lazydev source
-            })
-        end
-
-        -- If you have other optional sources, add similar checks here:
-        -- local has_blink = pcall(require, "blink")
-        -- if has_blink then
-        --     table.insert(opts.sources, { name = "blink" })
-        -- end
-
-        -- Setup formatting with lspkind symbols
-        opts.formatting.format = lspkind.cmp_format({
-            mode = "symbol_text",
-            maxwidth = 50,
-            ellipsis_char = "...",
-        })
-
-        -- Setup key mappings with fallback checks
-        opts.mapping = cmp.mapping.preset.insert({
-            ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-            ["<C-f>"] = cmp.mapping.scroll_docs(4),
-            ["<C-Space>"] = cmp.mapping.complete(),
-            ["<CR>"] = cmp.mapping.confirm({ select = true }),
-            ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif has_neogen and neogen.jumpable() then
-                    neogen.jump_next()
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
-            ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif has_neogen and neogen.jumpable() then
-                    neogen.jump_prev()
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
-        })
-
-        -- Finalize cmp setup with the updated opts
-        cmp.setup(opts)
-    end,
+--     "hrsh7th/nvim-cmp",
+--     dependencies = {
+--         "hrsh7th/cmp-buffer",
+--         "hrsh7th/cmp-path",
+--         "rafamadriz/friendly-snippets",
+--         "onsails/lspkind.nvim",
+--         "hrsh7th/cmp-nvim-lsp-signature-help",
+--         -- Add optional external sources here as dependencies to ensure installation:
+--         "folke/lazydev.nvim",         -- lazydev source plugin
+--         -- e.g., "saghen/blink.cmp"   -- if you use blink completion source
+--     },
+--
+--     opts = {
+--         -- Base sources always present
+--         sources = {
+--             { name = "nvim_lsp" },
+--             { name = "nvim_lsp_signature_help" },
+--             { name = "path" },
+--             { name = "buffer" },
+--         },
+--         formatting = {
+--             format = function(entry, vim_item)
+--                 -- Placeholder, overridden by lspkind in config()
+--                 return vim_item
+--             end,
+--         },
+--         mapping = {},  -- placeholder for mappings set in config()
+--     },
+--
+--     config = function(_, opts)
+--         local cmp = require("cmp")
+--         local lspkind = require("lspkind")
+--         local has_neogen, neogen = pcall(require, "neogen")
+--
+--         -- Conditionally add lazydev source if plugin is available
+--         local has_lazydev = pcall(require, "lazydev")
+--         if has_lazydev then
+--             table.insert(opts.sources, {
+--                 name = "lazydev",
+--                 group_index = 0,  -- optional config for lazydev source
+--             })
+--         end
+--
+--         -- If you have other optional sources, add similar checks here:
+--         -- local has_blink = pcall(require, "blink")
+--         -- if has_blink then
+--         --     table.insert(opts.sources, { name = "blink" })
+--         -- end
+--
+--         -- Setup formatting with lspkind symbols
+--         opts.formatting.format = lspkind.cmp_format({
+--             mode = "symbol_text",
+--             maxwidth = 50,
+--             ellipsis_char = "...",
+--         })
+--
+--         -- Setup key mappings with fallback checks
+--         opts.mapping = cmp.mapping.preset.insert({
+--             ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+--             ["<C-f>"] = cmp.mapping.scroll_docs(4),
+--             ["<C-Space>"] = cmp.mapping.complete(),
+--             ["<CR>"] = cmp.mapping.confirm({ select = true }),
+--             ["<Tab>"] = cmp.mapping(function(fallback)
+--                 if cmp.visible() then
+--                     cmp.select_next_item()
+--                 elseif has_neogen and neogen.jumpable() then
+--                     neogen.jump_next()
+--                 else
+--                     fallback()
+--                 end
+--             end, { "i", "s" }),
+--             ["<S-Tab>"] = cmp.mapping(function(fallback)
+--                 if cmp.visible() then
+--                     cmp.select_prev_item()
+--                 elseif has_neogen and neogen.jumpable() then
+--                     neogen.jump_prev()
+--                 else
+--                     fallback()
+--                 end
+--             end, { "i", "s" }),
+--         })
+--
+--         -- Finalize cmp setup with the updated opts
+--         cmp.setup(opts)
+--     end,
 }
 
