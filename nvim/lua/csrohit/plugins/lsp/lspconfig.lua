@@ -10,11 +10,6 @@ local on_attach = function(client, bufnr)
         vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
     end
 
-    -- Symbols displayed in Telescope window
-    local builtin = require("telescope.builtin")
-    nmap("<leader>ds", builtin.lsp_document_symbols, "Document Symbols")
-    nmap("<leader>ws", builtin.lsp_dynamic_workspace_symbols, "Workspace Symbols")
-
     -- Basic LSP navigation and info keymaps
     nmap("gI", vim.lsp.buf.implementation, "Goto Implementation")
     nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
@@ -43,7 +38,7 @@ end
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
-        "j-hui/fidget.nvim",                 -- optional UI for LSP status
+        "j-hui/fidget.nvim", -- optional UI for LSP status
         "saghen/blink.cmp",
         -- "hrsh7th/cmp-nvim-lsp",              -- Completion source for nvim-cmp
         "williamboman/mason-lspconfig.nvim", -- External LSP installer mapping
@@ -101,6 +96,9 @@ return {
                 Lua = {
                     workspace = { checkThirdParty = false },
                     telemetry = { enable = false },
+                    diagnostics = {
+                        globals = { "vim", "Snacks" }
+                    }
                 },
             },
         })
