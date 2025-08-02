@@ -36,10 +36,10 @@ return {
         Nmap("<leader>ff", builtin.find_files, { desc = "Find files" })
         Nmap("<leader>fg", builtin.live_grep, { desc = "Find in workspace" })
         Nmap("<leader>fw", builtin.grep_string, { desc = "Find current word in workspace" })
-        Nmap("<leader>f?", builtin.help_tags, { desc = "Find help" })
         Nmap("<leader>fd", builtin.diagnostics, { desc = "Find diagnostics" })
         Nmap("<leader>fc", builtin.commands, { desc = "Find commands" })
         Nmap("<leader><space>", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })
+        Nmap("<leader>?", builtin.help_tags, { desc = "Find help" })
 
         -- telescope git commands (not on youtube nvim video)
         Nmap("<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "List git commits" })               -- list all git commits (use <cr> to checkout) ["gc" for git commits]
