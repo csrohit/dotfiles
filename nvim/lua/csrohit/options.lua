@@ -1,7 +1,20 @@
---FIle: lua/csrohit/options.lua
+--File: lua/csrohit/options.lua
+
+-- Disable the builtin file explorer plugin
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 -- line numbers
 vim.o.relativenumber = true
+vim.wo.number = true
+
+-- Left option key to act as Alt key
 vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
 -- tabs and spacing
@@ -11,6 +24,8 @@ vim.o.shiftwidth = 4
 vim.o.autoindent = true
 vim.o.softtabstop = 4
 
+-- Enable break indent
+vim.o.breakindent = true
 
 -- display spaces
 vim.o.listchars="eol:¬,tab:>␣,trail:~,extends:>,precedes:<,space:·"
@@ -27,12 +42,6 @@ vim.o.signcolumn = "yes"
 vim.o.splitright = true
 vim.o.splitbelow = true
 
--- Set highlight on search
-vim.o.hlsearch = true
-
--- Make line numbers default
-vim.wo.number = true
-
 -- Enable mouse mode
 vim.o.mouse = "a"
 
@@ -41,11 +50,11 @@ vim.o.mouse = "a"
 --  See `:help 'clipboard'`
 vim.o.clipboard = "unnamedplus"
 
--- Enable break indent
-vim.o.breakindent = true
-
 -- Save undo history
 vim.o.undofile = true
+
+-- Set highlight on search
+vim.o.hlsearch = true
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -64,6 +73,8 @@ vim.o.completeopt = "menu,menuone,noselect"
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- Highlight the yanked text after yanking
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
