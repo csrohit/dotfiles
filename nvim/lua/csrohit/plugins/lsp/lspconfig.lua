@@ -115,7 +115,7 @@ return {
 
         lspconfig.cmake.setup({
             cmd = { "cmake-language-server" }, -- command to start the server; ensure it's in your PATH
-            filetypes = { "cmake" }, -- recognizes *.cmake and CMakeLists.txt files
+            filetypes = { "cmake" },           -- recognizes *.cmake and CMakeLists.txt files
             root_dir = lspconfig.util.root_pattern("CMakeLists.txt", ".git", "build", "cmake"),
             -- root_dir determines the project root by detecting any of these files/directories upward from the opened file
 
@@ -126,12 +126,44 @@ return {
             single_file_support = true, -- enable for single cmake files outside a project root
         })
 
-        -- cmake-language-server for CMakeLists.txt and cmake files
-        lspconfig.cmake.setup({
+        -- python-language-server (pylsp) setup
+        lspconfig.pylsp.setup({
             capabilities = capabilities,
             on_attach = on_attach,
-            -- Root directory detection for CMake projects
-            root_dir = util.root_pattern("CMakeLists.txt", ".git"),
+            settings = {
+                pylsp = {
+                    plugins = {
+                        -- Enable/Disable pylsp plugins as you like
+                        pycodestyle = { enabled = true, maxLineLength = 120 },
+                        flake8 = { enabled = false }, -- you can enable if you prefer
+                        mccabe = { enabled = false },
+                        pyflakes = { enabled = true },
+                        pylint = { enabled = false },
+                        yapf = { enabled = false },
+                        black = { enabled = false },
+                        rope_autoimport = { enabled = false },
+                        rope_completion = { enabled = false },
+                        pylsp_mypy = { enabled = false },
+                        isort = { enabled = true },
+                    },
+                },
+            },
+        })
+
+        -- rust-analyzer: Rust language server configuration
+        lspconfig.rust_analyzer.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = {
+                ["rust-analyzer"] = {
+                    cargo = {
+                        allFeatures = true,
+                    },
+                    checkOnSave = {
+                        command = "clippy",
+                    },
+                },
+            },
         })
     end,
 }
