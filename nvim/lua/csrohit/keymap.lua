@@ -77,3 +77,91 @@ Nmap("<C-`>", ":vsplit term://zsh<CR>", { desc = "Open terminal" })
 Map("t", "<ESC>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 Nmap("<leader>ng", "<cmd>Neogen<CR>", { desc = "Generate annotations" })
 
+
+function create_new_file(filename)
+    local cwd = vim.fn.getcwd() -- get current working directory
+    local filepath = cwd .. "/" .. filename
+
+    local file, err = io.open(filepath, "w") -- open file for writing (creates or clears)
+    if not file then
+        print("Error creating file: " .. err)
+        return
+    end
+    file:close()
+    print("File created: " .. filepath)
+end
+
+-- Create a floating window
+local function create_floating_window()
+    -- local Snacks = require("snacks") -- load the snacks module
+    ---@type snacks.input.Opts: snacks.input.Config,{}
+    local opts = {
+        prompt = "Filename",
+        backdrop = false,
+        position = "float",
+        border = "rounded",
+        title_pos = "center",
+        height = 1,
+        width = 60,
+        relative = "editor",
+        noautocmd = true,
+        row = 2,
+        -- relative = "cursor",
+        -- row = -3,
+        -- col = 0,
+        wo = {
+            winhighlight = "NormalFloat:SnacksInputNormal,FloatBorder:SnacksInputBorder,FloatTitle:SnacksInputTitle",
+            cursorline = false,
+        },
+        bo = {
+            filetype = "snacks_input",
+            buftype = "prompt",
+            modifiable = true
+        },
+        --- buffer local variables
+        b = {
+            completion = true, -- disable blink completions in input
+        },
+        keys = {
+            n_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "n", expr = true },
+            i_esc = { "<esc>", { "cmp_close", "stopinsert" }, mode = "i", expr = true },
+            i_cr = { "<cr>", { "cmp_accept", "confirm" }, mode = { "i", "n" }, expr = true },
+            i_tab = { "<tab>", { "cmp_select_next", "cmp" }, mode = "i", expr = true },
+            i_ctrl_w = { "<c-w>", "<c-s-w>", mode = "i", expr = true },
+            i_up = { "<up>", { "hist_up" }, mode = { "i", "n" } },
+            i_down = { "<down>", { "hist_down" }, mode = { "i", "n" } },
+            q = "cancel",
+        },
+        default = vim.fn.getcwd() .. "/",
+        sources = { "path" }
+    }
+
+    local on_confirm = function(value)
+        if value == nil or value == "" then
+            print("Input cancelled (Escape pressed or empty input)")
+        else
+            local file = io.open(value, "r")
+            if file then
+                -- File exists, close the handle and just open it in Neovim
+                file:close()
+                print("File exists: " .. value)
+            else
+                -- File does not exist, create it
+                file, err = io.open(value, "w")
+                if not file then
+                    print("Error creating file: " .. err)
+                    return
+                end
+                file:close()
+                print("File created: " .. value)
+            end
+            -- Open the file in Neovim
+            vim.cmd("edit " .. vim.fn.fnameescape(value))
+        end
+    end
+
+    Snacks.input.input(opts, on_confirm)
+end
+
+
+Nmap("<leader>rr", create_floating_window, { desc = "Rohit function" })
