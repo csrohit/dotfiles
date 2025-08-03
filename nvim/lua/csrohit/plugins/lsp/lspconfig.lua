@@ -17,6 +17,7 @@ local on_attach = function(client, bufnr)
     nmap("gd", vim.lsp.buf.definition, "Goto Definition")
     nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
     nmap("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
+    nmap("ca", vim.lsp.buf.code_action, "Code Action")
 
 
     nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
