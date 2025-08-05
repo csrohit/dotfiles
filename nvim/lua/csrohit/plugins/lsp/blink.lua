@@ -3,7 +3,7 @@
 
 return {
     "saghen/blink.cmp",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "InsertEnter" },
     -- use a release tag to download pre-built binaries
     version = '1.*',
 
@@ -12,6 +12,8 @@ return {
         "saghen/blink.compat", -- compatibility layer for nvim-cmp sources (optional)
     },
 
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
         -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
         -- 'super-tab' for mappings similar to vscode (tab to accept)
@@ -30,7 +32,50 @@ return {
         appearance = {
             -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
             -- Adjusts spacing to ensure icons are aligned
-            nerd_font_variant = 'mono'
+            nerd_font_variant = 'mono',
+            kind_icons =
+            {
+                Array         = " ",
+                Boolean       = "󰨙 ",
+                Class         = " ",
+                Codeium       = "󰘦 ",
+                Color         = " ",
+                Control       = " ",
+                Collapsed     = " ",
+                Constant      = "󰏿 ",
+                Constructor   = " ",
+                Copilot       = " ",
+                Enum          = " ",
+                EnumMember    = " ",
+                Event         = " ",
+                Field         = " ",
+                File          = " ",
+                Folder        = " ",
+                Function      = "󰊕 ",
+                Interface     = " ",
+                Key           = " ",
+                Keyword       = " ",
+                Method        = "󰊕 ",
+                Module        = " ",
+                Namespace     = "󰦮 ",
+                Null          = " ",
+                Number        = "󰎠 ",
+                Object        = " ",
+                Operator      = " ",
+                Package       = " ",
+                Property      = " ",
+                Reference     = " ",
+                Snippet       = "󱄽 ",
+                String        = " ",
+                Struct        = "󰆼 ",
+                Supermaven    = " ",
+                TabNine       = "󰏚 ",
+                Text          = " ",
+                TypeParameter = " ",
+                Unit          = " ",
+                Value         = " ",
+                Variable      = "󰀫 ",
+            }
         },
 
         -- Completion sources with default and compat groups
@@ -49,34 +94,29 @@ return {
 
         -- Completion menu config: documentation auto popup, ghost text (if you want), signature help enabled
         completion = {
+            accept = {
+                -- experimental auto-brackets support
+                auto_brackets = {
+                    enabled = true,
+                },
+            },
+            menu = {
+                draw = {
+                    treesitter = { "lsp" },
+                },
+            },
             documentation = {
                 auto_show = true,
                 auto_show_delay_ms = 200,
             },
             ghost_text = {
-                enabled = true, -- enable inline ghost text (adjust as needed)
-            },
-            accept = {
-                auto_brackets = {
-                    enabled = true, -- experimental auto-bracket feature similar to nvim-cmp's
-                },
+                enabled = vim.g.ai_cmp,
             },
         },
         signature = {
-            enabled = true,     -- enables experimental builtin signature help popup
+            enabled = true, -- enables experimental builtin signature help popup
         },
 
-        -- Keymap style: "preset" options available: enter, tab, etc.
-        -- keymap = {
-        --     preset = "insert",    -- use "insert" preset mappings similar to nvim-cmp insert mode
-        --     ["<Tab>"] = "select_next",     -- select next completion item
-        --     ["<S-Tab>"] = "select_prev",   -- select previous completion item
-        --     ["<C-d>"] = "scroll_docs_up",
-        --     ["<C-f>"] = "scroll_docs_down",
-        --     ["<C-Space>"] = "complete",
-        --     ["<CR>"] = "accept",
-        --     -- Additional custom mappings can be added here as needed
-        -- },
         -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
         -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
         -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
