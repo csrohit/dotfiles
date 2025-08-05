@@ -48,17 +48,10 @@ return {
         signs = {
             -- Define the text symbols for each diagnostic severity level
             text = {
-                [vim.diagnostic.severity.ERROR] = "",
-                [vim.diagnostic.severity.WARN]  = "",
-                [vim.diagnostic.severity.INFO]  = "󰋼",
-                [vim.diagnostic.severity.HINT]  = "󰌵",
-            },
-            -- You can optionally configure number highlights here
-            numhl = {
-                [vim.diagnostic.severity.ERROR] = "",
-                [vim.diagnostic.severity.WARN]  = "",
-                [vim.diagnostic.severity.INFO]  = "",
-                [vim.diagnostic.severity.HINT]  = "",
+                [vim.diagnostic.severity.ERROR] = " ",
+                [vim.diagnostic.severity.WARN]  = " ",
+                [vim.diagnostic.severity.INFO]  = " ",
+                [vim.diagnostic.severity.HINT]  = " ",
             },
         },
     },
