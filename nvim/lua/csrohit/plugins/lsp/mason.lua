@@ -1,4 +1,5 @@
---File: lua/csrohit/plugins/mason.lua
+
+--File: lua/csrohit/plugins/lsp/mason.lua
 
 return {
     'williamboman/mason.nvim',

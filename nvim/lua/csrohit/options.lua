@@ -4,6 +4,16 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Enable cursorline (highlight current line)
+vim.opt.cursorline = true
+
+-- Highlight only the line number of the current line
+vim.opt.cursorlineopt = "number"
+vim.api.nvim_set_hl(0, "CursorLineNr", {
+  bold = true,
+  -- You can also set a specific color if you want, for example:
+  -- fg = "#FFD700",  -- gold/yellow foreground color
+})
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
@@ -28,7 +38,7 @@ vim.o.softtabstop = 4
 vim.o.breakindent = true
 
 -- display spaces
-vim.o.listchars="eol:¬,tab:>␣,trail:~,extends:>,precedes:<,space:·"
+vim.o.listchars = "eol:¬,tab:>␣,trail:~,extends:>,precedes:<,space:·"
 -- vim.o.list=true
 
 -- disable line wrapping
@@ -73,14 +83,3 @@ vim.o.completeopt = "menu,menuone,noselect"
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
-
--- Highlight the yanked text after yanking
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = "*",
-})
-

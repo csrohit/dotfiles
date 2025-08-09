@@ -1,8 +1,2 @@
--- options
-require("csrohit.options")
+require("csrohit")
 
--- keymap
-require("csrohit.keymap")
-
--- setup plugins
-require("csrohit.plugin-setup")

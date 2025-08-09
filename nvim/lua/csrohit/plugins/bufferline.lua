@@ -1,6 +1,5 @@
---File: lua/csrohit/plugins.bufferline.lua
-
-return{
-    'akinsho/bufferline.nvim',
-    opts = {}
+local Icons = require("csrohit.icons")
+return {
+    "akinsho/bufferline.nvim",
+    opts = {},
 }
