@@ -149,7 +149,7 @@ return {
 
     config = function(_, opts)
         local lspconfig = require("lspconfig")
-        local util = lspconfig.util
+        -- local util = lspconfig.util
 
         local capabilities = vim.tbl_deep_extend(
             'force',
@@ -160,7 +160,7 @@ return {
         )
 
         -- clangd: C, C++ and Objective-C language server configuration
-        lspconfig.clangd.setup({
+        vim.lsp.config('clangd', {
             capabilities = capabilities,
             on_attach = on_attach,
 
@@ -168,16 +168,16 @@ return {
             cmd = { "clangd", "--header-insertion=never", "--log=verbose" },
 
             -- Root directory detection for clangd projects
-            root_dir = util.root_pattern(
-                ".clangd",
-                "compile_commands.json",
-                "compile_flags.txt",
-                ".git"
-            ),
+            -- root_dir = util.root_pattern(
+            --     ".clangd",
+            --     "compile_commands.json",
+            --     "compile_flags.txt",
+            --     ".git"
+            -- ),
         })
 
         -- lua-language-server (lua_ls) for neovim config Lua support
-        lspconfig.lua_ls.setup({
+        vim.lsp.config('lua_ls', {
             capabilities = capabilities,
             on_attach = on_attach,
             settings = {
@@ -191,7 +191,7 @@ return {
             },
         })
 
-        lspconfig.cmake.setup({
+        vim.lsp.config('cmake', {
             cmd = { "cmake-language-server" }, -- command to start the server; ensure it's in your PATH
             filetypes = { "cmake" },           -- recognizes *.cmake and CMakeLists.txt files
             root_dir = lspconfig.util.root_pattern("CMakeLists.txt", ".git", "build", "cmake"),
@@ -205,7 +205,7 @@ return {
         })
 
         -- python-language-server (pylsp) setup
-        lspconfig.pylsp.setup({
+        vim.lsp.config('pylsp', {
             capabilities = capabilities,
             on_attach = on_attach,
             settings = {
@@ -229,7 +229,7 @@ return {
         })
 
         -- rust-analyzer: Rust language server configuration
-        lspconfig.rust_analyzer.setup({
+        vim.lsp.config('rust_analyzer', {
             capabilities = capabilities,
             on_attach = on_attach,
             settings = {
