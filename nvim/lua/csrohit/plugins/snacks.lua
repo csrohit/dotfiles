@@ -196,11 +196,19 @@ return {
                     set = function(state)
                         vim.o.showtabline = state and 2 or 0
                     end,
-                }):map("<leader>tb") -- your chosen keybinding
+                }):map("<leader>tb")
 
                 Snacks.toggle.inlay_hints():map("<leader>uh")
-                Snacks.toggle.indent():map("<leader>tg")
-                Snacks.toggle.dim():map("<leader>tD")
+                Snacks.toggle.indent():map("<leader>ti")
+                Snacks.toggle({
+                    name = "Git Blame",
+                    get = function()
+                        return require('gitsigns.config').config.current_line_blame
+                    end,
+                    set = function()
+                        require('gitsigns.actions').toggle_current_line_blame()
+                    end
+                }):map("<leader>tg")
             end,
         })
     end,
