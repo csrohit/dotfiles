@@ -182,7 +182,14 @@ return {
             on_attach = on_attach,
             settings = {
                 Lua = {
-                    workspace = { checkThirdParty = false },
+                    runtime = { version = 'LuaJIT' },
+                    workspace = {
+                        library = {
+                            vim.api.nvim_get_runtime_file("", true),
+                            "~/.local/share/nvim/lazy/",
+                        },
+                        checkThirdParty = false
+                    },
                     telemetry = { enable = false },
                     diagnostics = {
                         globals = { "vim", "Snacks" }
