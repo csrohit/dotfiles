@@ -83,7 +83,7 @@ plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 This installs the latest stable version of LLVM/Clang.
 
 ```bash
-wget [https://apt.llvm.org/llvm.sh](https://apt.llvm.org/llvm.sh)
+wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
 sudo ./llvm.sh <version>
 # Example: sudo ./llvm.sh 17
