@@ -1,3 +1,8 @@
 [window]
 decorations = "full"
 opacity = 0.9
+startup_mode = "Fullscreen"
+
+[[keyboard.bindings]]
+key = "F11"
+action = "ToggleFullscreen"
