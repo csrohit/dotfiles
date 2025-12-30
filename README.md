@@ -40,7 +40,7 @@ Follow these steps in order to set up a new system.
 
 ### 1. Install Homebrew
 ```bash
-/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh](https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh))"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 ### 2. Install Core Tools
