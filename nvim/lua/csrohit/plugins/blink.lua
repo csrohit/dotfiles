@@ -10,6 +10,7 @@ return {
     dependencies = {
         "folke/lazydev.nvim",  -- optional Lua dev completions source
         "saghen/blink.compat", -- compatibility layer for nvim-cmp sources (optional)
+        'moyiz/blink-emoji.nvim'
     },
 
     ---@module 'blink.cmp'
@@ -85,13 +86,18 @@ return {
         -- Completion sources with default and compat groups
         sources = {
             -- Default sources always enabled
-            default = { "lsp", "snippets", "path", "buffer", "lazydev" },
+            default = { "lsp", "snippets", "path", "buffer", "lazydev", "emoji" },
             -- Providers table for external source plugins like lazydev
             providers = {
                 lazydev = {
                     name = "LazyDev",
                     module = "lazydev.integrations.blink",
                     score_offset = 100, -- higher priority than LSP
+                },
+                emoji = {
+                    module = 'blink-emoji',
+                    name = 'Emoji',
+                    score_offset = 15, -- Adjust priority (higher = shows up first)
                 },
             },
         },
