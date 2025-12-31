@@ -1,8 +1,22 @@
+[font]
+    # The family name must match exactly what fc-list reported
+    normal = { family = "JetBrainsMono Nerd Font Mono", style = "Light" }
+    italic = { family = "JetBrainsMono Nerd Font Mono", style = "Light Italic" }
+    bold = { family = "JetBrainsMono Nerd Font Mono", style = "Bold" }
+    bold_italic = { family = "JetBrainsMono Nerd Font Mono", style = "Bold Italic" }
+
 [window]
-decorations = "full"
-opacity = 0.9
-startup_mode = "Fullscreen"
+    # padding = { x = 5, y = 5 }
+    decorations = "full"
+    opacity = 0.9
+    # startup_mode = "Fullscreen"
 
 [[keyboard.bindings]]
-key = "F11"
-action = "ToggleFullscreen"
+    key = "F11"
+    action = "ToggleFullscreen"
+
+[delta]
+    # Make the UI feel as "Light" as your terminal font
+    hunk-header-style = "omit"
+    line-numbers-left-format = "{nm:>4} "
+    line-numbers-right-format = "{np:>4} "
