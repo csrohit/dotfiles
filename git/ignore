@@ -1,0 +1,18 @@
+# 📁 OS Generated Files
+.DS_Store
+Thumbs.db
+
+# 🏗️ Programming Languages & Tools
+node_modules/
+dist/
+build/
+.env
+.venv/
+__pycache__/
+
+# 🔍 Editor Specific
+.idea/
+.vscode/
+*.swp
+*.swo
+undo/

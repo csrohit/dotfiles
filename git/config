@@ -1,0 +1,25 @@
+[core]
+    pager = delta
+    excludesfile = ~/.config/git/ignore
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = decorations
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+    # Matches your Light font weight
+    syntax-theme = Catppuccin Mocha
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+
+[merge]
+    conflictstyle = zdiff3
+
+[diff]
+    colorMoved = default
