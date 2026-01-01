@@ -28,7 +28,24 @@ return {
         -- C-k: Toggle signature help (if signature.enabled = true)
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        keymap = { preset = 'enter' },
+        keymap = {
+            -- 'default' preset leaves other keys (like C-space) working normally
+            preset        = 'default',
+            -- 1. The standard command to show the menu
+            ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+
+            -- 2. THE FIX: Map <C-@> (NUL) to the same behavior to catch terminal mismatches
+            ['<C-@>']     = { 'show', 'show_documentation', 'hide_documentation' },
+
+            -- Cycle forward with Tab
+            ['<Tab>']     = { 'select_next', 'fallback' },
+
+            -- Cycle backward with Shift-Tab (optional but recommended)
+            ['<S-Tab>']   = { 'select_prev', 'fallback' },
+
+            -- Select with Enter
+            ['<CR>']      = { 'accept', 'fallback' },
+        },
 
         cmdline = {
             enabled = true
