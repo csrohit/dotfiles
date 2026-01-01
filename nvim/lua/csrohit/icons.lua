@@ -80,4 +80,10 @@ return {
         Value         = " ",
         Variable      = "󰀫 ",
     },
+    separators = {
+        left = "",
+        right = "",
+        block_left = "",
+        block_right = "",
+    },
 }
