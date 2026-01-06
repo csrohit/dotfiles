@@ -3,52 +3,52 @@ return {
     branch = "main",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-        require("nvim-treesitter-textobjects").setup({
-            select = {
-                enable = true,
-                lookahead = true,
-                keymaps = {
-                    ["af"] = "@function.outer",
-                    ["if"] = "@function.inner",
-                    ["ac"] = "@class.outer",
-                    ["ic"] = "@class.inner",
-                    ["ap"] = "@parameter.outer",
-                    ["ip"] = "@parameter.inner",
-                },
-            },
-            swap = {
-                enable = true,
-                swap_next = {
-                    ["<leader>a"] = "@parameter.inner",
-                },
-                swap_previous = {
-                    ["<leader>A"] = "@parameter.outer", -- Updated to match your manual keymap
-                },
-            },
-            move = {
-                enable = true,
-                set_jumps = true, -- Check this: allows you to use Ctrl-o to jump back
-                goto_next_start = {
-                    ["]m"] = "@function.outer",
-                    -- You can pass a list of queries to cycle through
-                    ["]o"] = { "@loop.inner", "@loop.outer" },
+        -- Directly require the functional modules
+        local select = require("nvim-treesitter-textobjects.select")
+        local move = require("nvim-treesitter-textobjects.move")
 
-                    -- To use "locals" or "folds", we use the table syntax
-                    ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
-                    ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-                },
-                goto_next_end = {
-                    ["]M"] = "@function.outer",
-                    ["]["] = "@class.outer",
-                },
-                goto_previous_start = {
-                    ["[m"] = "@function.outer",
-                },
-                goto_previous_end = {
-                    ["[M"] = "@function.outer",
-                    ["[]"] = "@class.outer",
-                },
-            },
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "c", "cpp", "lua", "python", "javascript" },
+            callback = function(args)
+                local bufnr = args.buf
+                local opts = { buffer = bufnr, silent = true }
+
+                -- Check if parser is ready to avoid the E5108 crash
+                local ok, _ = pcall(vim.treesitter.get_parser, bufnr)
+                if not ok then return end
+
+                ---------------------------------------------------------
+                -- SELECTION (if/af/ic/ac)
+                ---------------------------------------------------------
+                vim.keymap.set({ "x", "o" }, "af", function()
+                    select.select_textobject("@function.outer", "textobjects")
+                end, opts)
+
+                vim.keymap.set({ "x", "o" }, "if", function()
+                    select.select_textobject("@function.inner", "textobjects")
+                end, opts)
+
+                ---------------------------------------------------------
+                -- NAVIGATION ([f / ]f)
+                ---------------------------------------------------------
+                -- Buffer-local mappings override global plugin defaults
+                vim.keymap.set({ "n", "x", "o" }, "[f", function()
+                    move.goto_previous_start("@function.outer", "textobjects")
+                end, opts)
+
+                vim.keymap.set({ "n", "x", "o" }, "]f", function()
+                    move.goto_next_start("@function.outer", "textobjects")
+                end, opts)
+                
+                -- End of function
+                vim.keymap.set({ "n", "x", "o" }, "[F", function()
+                    move.goto_previous_end("@function.outer", "textobjects")
+                end, opts)
+
+                vim.keymap.set({ "n", "x", "o" }, "]F", function()
+                    move.goto_next_end("@function.outer", "textobjects")
+                end, opts)
+            end,
         })
     end,
 }
