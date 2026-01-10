@@ -24,9 +24,6 @@ return {
                     pcall(vim.treesitter.start, bufnr, lang)
 
                     -- Setup Folding
-                    vim.wo.foldmethod = "expr"
-                    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-                    vim.opt_local.foldlevel = 99
                 end
             end,
         })
