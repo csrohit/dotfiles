@@ -137,7 +137,15 @@ return {
             on_attach = on_attach,
 
             -- Command configuration with header insertion disabled
-            cmd = { "clangd", "--header-insertion=never", "--log=verbose" },
+            cmd = {
+                "clangd",
+                "--header-insertion=never",
+                "--log=verbose",
+                "--background-index",      -- Ensure background indexing is on
+                "--all-scopes-completion", -- Better completion
+                "--completion-style=detailed",
+                "--pch-storage=memory",
+            },
 
             -- Root directory detection for clangd projects
             -- root_dir = util.root_pattern(
@@ -171,6 +179,7 @@ return {
         })
 
         vim.lsp.config('cmake', {
+            on_attach = on_attach,
             cmd = { "cmake-language-server" }, -- command to start the server; ensure it's in your PATH
             filetypes = { "cmake" },           -- recognizes *.cmake and CMakeLists.txt files
             root_dir = lspconfig.util.root_pattern("CMakeLists.txt", ".git", "build", "cmake"),
@@ -183,27 +192,18 @@ return {
             single_file_support = true, -- enable for single cmake files outside a project root
         })
 
-        -- python-language-server (pylsp) setup
-        vim.lsp.config('pylsp', {
+        -- python-language-server (pyright) setup
+        vim.lsp.config('pyright', {
             capabilities = capabilities,
             on_attach = on_attach,
             settings = {
-                pylsp = {
-                    plugins = {
-                        -- Enable/Disable pylsp plugins as you like
-                        pycodestyle = { enabled = true, maxLineLength = 120 },
-                        flake8 = { enabled = false }, -- you can enable if you prefer
-                        mccabe = { enabled = false },
-                        pyflakes = { enabled = true },
-                        pylint = { enabled = false },
-                        yapf = { enabled = false },
-                        black = { enabled = false },
-                        rope_autoimport = { enabled = false },
-                        rope_completion = { enabled = false },
-                        pylsp_mypy = { enabled = false },
-                        isort = { enabled = true },
-                    },
-                },
+                python = {
+                    analysis = {
+                        autoSearchPaths = true,
+                        diagnosticMode = "openFilesOnly",
+                        useLibraryCodeForTypes = true
+                    }
+                }
             },
         })
 
