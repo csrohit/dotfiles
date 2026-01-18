@@ -16,7 +16,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
         else
             chunkText = truncate(chunkText, targetWidth - curWidth)
             local hlGroup = chunk[2]
-            table.insert(newVirtText, {chunkText, hlGroup})
+            table.insert(newVirtText, { chunkText, hlGroup })
             chunkWidth = vim.fn.strdisplaywidth(chunkText)
             -- Padding if truncated
             if curWidth + chunkWidth < targetWidth then
@@ -27,7 +27,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
         curWidth = curWidth + chunkWidth
     end
 
-    table.insert(newVirtText, {suffix, 'MoreMsg'})
+    table.insert(newVirtText, { suffix, 'MoreMsg' })
     return newVirtText
 end
 
@@ -41,7 +41,7 @@ return {
     event = "BufReadPost",
     init = function()
         -- INFO: Disable foldcolumn to save space
-        vim.o.foldcolumn = '0' 
+        vim.o.foldcolumn = '0'
         vim.o.foldlevel = 99
         vim.o.foldlevelstart = 99
         vim.o.foldenable = true
@@ -52,18 +52,9 @@ return {
         -- 3. Setup UFO using the handler defined above
         ufo.setup({
             provider_selector = function(bufnr, filetype, buftype)
-                return {'treesitter', 'indent'}
+                return { 'treesitter', 'indent' }
             end,
             fold_virt_text_handler = handler
-        })
-
-        -- 4. FORCE SETTINGS: The fix for the auto-folding issue
-        vim.api.nvim_create_autocmd({"BufEnter", "BufReadPost", "InsertLeave"}, {
-            pattern = "*",
-            callback = function()
-                vim.opt.foldlevel = 99
-                vim.opt.foldenable = true
-            end,
         })
 
         -- 5. Keymaps
