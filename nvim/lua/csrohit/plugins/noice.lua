@@ -1,3 +1,4 @@
+--File: lua/csrohit/plugins/noice.lua
 return {
     -- lazy.nvim
     "folke/noice.nvim",
@@ -21,7 +22,7 @@ return {
                         { find = "; before #%d+" },
                     },
                 },
-                view = "mini",
+                view = "notify",
             },
         },
         cmdline = {
